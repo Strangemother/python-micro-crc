@@ -1,4 +1,4 @@
-# `crc.crc32`
+# Python `farcrc.crc32`
 
 A CRC32 checksum for python - implemented in Nim lang for lower-level language.
 
@@ -13,12 +13,19 @@ crc32('Hello World')
 
 
 + **Is fast fast fast**
+
     Using a compiled nim module under-the-hood we gain c-speed fastness. Pre-computing the CRC table ensures only XOR bit manipulation is the main task.
+
 + **Table-Driven Approach:**
+
     Precomputing a lookup table transforms an algorithm that could have been computationally expensive into one that’s highly efficient.
+
 + **Made in Nim (exported to Python)**
+
     Nim's `nimpy` module makes it simple to expose native Nim code to Python.
+
 + Matches online examples:
+
     Using polynomial `0xEDB88320` ensures we match JS and other online examples.
 
 
@@ -26,6 +33,7 @@ crc32('Hello World')
 
 > Benchmarks mean nothing. 99% of the time they only detail the 1% of perfect cases. That said - Checkout _this_ benchmark:
 
+Comparing against the fastest python crc library https://github.com/marzooqy/anycrc
 
 ```
 Name                     Outliers  OPS (Kops/s)            Rounds
@@ -37,12 +45,11 @@ test_crc_32             2497;2497      759.6637 (1.0)       92799
 
 We see that `anycrc` is 1% slower!
 
-
 ---
 
 ### Benchmark Notes
 
-+ Best result operations per second is 1% faster than `anycrc` (the fastest) - especially from cold-start.
++ Best result operations per second is 1% faster than `anycrc` (the fastest in python) - especially from cold-start.
 + On average it's \~5% slower (AFTER WARMUP!)
 + But also; `any_crc` is 4% slower than its own fastest run
 
@@ -57,9 +64,9 @@ test_crc_32 (windows-cpython-3.8-64bit/0030_51bb0b1)         730.7685 (0.88)    
 
 Caveats:
 
-+ speed runs are from cold-start, then 4 hot runs. `any crc` is faster after warm-up.
++ speed runs are from cold-start, then 4 hot runs. `anycrc` is faster after warm-up.
 + This is an older version of Nim, Windows, and Python - newer will probably be faster
-+ *This is using a custom compiled python 3.8 - for other reasons...*
++ (anycrc)[https://github.com/marzooqy/anycrc] is a much better product
 
 Legend:
 
