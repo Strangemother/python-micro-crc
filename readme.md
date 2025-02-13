@@ -27,6 +27,21 @@ crc32('Hello World')
 > Benchmarks mean nothing. 99% of the time they only detail the 1% of perfect cases. That said - Checkout _this_ benchmark:
 
 
+```
+Name                     Outliers  OPS (Kops/s)            Rounds
+-------------------------------------------------------------------
+test_anycrc_32          5906;5906      755.0418 (0.99)      79854
+test_crc_32             2497;2497      759.6637 (1.0)       92799
+-------------------------------------------------------------------
+```
+
+We see that `anycrc` is 1% slower!
+
+
+---
+
+### Benchmark Notes
+
 + Best result operations per second is 1% faster than `anycrc` (the fastest) - especially from cold-start.
 + On average it's \~5% slower (AFTER WARMUP!)
 + But also; `any_crc` is 4% slower than its own fastest run
