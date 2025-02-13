@@ -1,7 +1,8 @@
 # `crc.crc32`
 
-A CRC32 checksum - implemented in a lower-level language. Here we'll explore a Nim module that calculates a CRC32 checksum using a precomputed lookup table
+A CRC32 checksum for python - implemented in Nim lang for lower-level language.
 
+Usage:
 
 ```py
 from crc import crc32
@@ -11,16 +12,17 @@ crc32('Hello World')
 ```
 
 
-- **Is fast fast fast**
-  Using a compiled nim module under-the-hood we gain c-speed fastness. Pre-computing the CRC table ensures only XOR bit manipulation is the main task.
-- **Table-Driven Approach:**
-  Precomputing a lookup table transforms an algorithm that could have been computationally expensive into one that’s highly efficient.
-- **Made in Nim (exported to Python)**
-  Nim's `nimpy` module makes it simple to expose native Nim code to Python.
-- Matches online examples:
++ **Is fast fast fast**
+    Using a compiled nim module under-the-hood we gain c-speed fastness. Pre-computing the CRC table ensures only XOR bit manipulation is the main task.
++ **Table-Driven Approach:**
+    Precomputing a lookup table transforms an algorithm that could have been computationally expensive into one that’s highly efficient.
++ **Made in Nim (exported to Python)**
+    Nim's `nimpy` module makes it simple to expose native Nim code to Python.
++ Matches online examples:
     Using polynomial `0xEDB88320` ensures we match JS and other online examples.
 
----
+
+## Benchmark
 
 > Benchmarks mean nothing. 99% of the time they only detail the 1% of perfect cases. That said - Checkout _this_ benchmark:
 
@@ -124,63 +126,5 @@ crc32(msg).toString(16)
 '414fa339'
 ```
 
-
-## More Info
-
-The CRC32 (Cyclic Redundancy Check) algorithm is widely used for error-checking in data transmissions. At its core, it processes a stream of bytes to generate a unique checksum that helps detect accidental changes in the data.
-
-
-```nim
-type CRC32* = uint32
-const initCRC32* = CRC32(0xFFFFFFFF)
-```
-
-We define a new type alias `CRC32` for a 32-bit unsigned integer. The asterisks (`*`) indicate that these definitions are exported—making them visible to Python.
-
-### Pre Computed CRC table
-
-One of the critical performance boosts of CRC32 is the use of a lookup table. Instead of computing the CRC value bit by bit for every character, the table lets you process one byte at a time.
-
-For each byte, we simulate processing 8 bits (like iterating over each bit in the byte). The use of bitwise operators (`and`, `shr` for shift-right, and `xor`) is very similar to Python’s bit manipulation:
-
-```python
-  if (rem & 1) > 0:
-      rem = (rem >> 1) ^ 0xedb88320
-  else:
-      rem = rem >> 1
-```
-
-After processing all bits, the computed value for that byte is stored in the lookup table (`result[i]` in Nim, similar to assigning to a list index in Python).
-
-Once this function is called, the table is memoized.
-
-
-```nim
-var crc32table = createCRCTable()
-```
-
-### Crunching the Checksum
-
-Now that we have our lookup table, the next step is to compute the CRC32 checksum of a given string.
-
-```nim
-proc crc32(s: string): CRC32 {.exportpy.} =
-  result = initCRC32
-  for c in s:
-    result = (result shr 8) xor crc32table[(result and 0xff) xor uint32(ord(c))]
-  result = not result
-```
-
-The function takes a string and returns a `CRC32` value. The `{.exportpy.}` pragma marks this function to be exported to Python, making it callable like any regular Python function. The CRC computation starts with a predefined constant (`0xFFFFFFFF`)
-
-### Processing Each Character
-
-For each character:
-
-1. **Extract the Least Significant Byte (LSB):**
-     `(result and 0xff)` which isolates the lowest 8 bits of the result.
-2. **Update Using the Lookup Table:**
-     The current byte value is XORed with the LSB, and the lookup table is used to retrieve the corresponding value. The CRC result is then updated by shifting right by 8 bits and applying an XOR with the looked-up value.
-
-After processing all characters, the result is inverted using a bitwise NOT. This final step produces the completed CRC32 checksum.
+---
 
