@@ -66,7 +66,7 @@ Caveats:
 
 + speed runs are from cold-start, then 4 hot runs. `anycrc` is faster after warm-up.
 + This is an older version of Nim, Windows, and Python - newer will probably be faster
-+ (anycrc)[https://github.com/marzooqy/anycrc] is a much better product
++ [anycrc](https://github.com/marzooqy/anycrc) is a much better product
 
 Legend:
 
