@@ -1,4 +1,4 @@
-# Python `farcrc.crc32`
+# Python `crc.crc32`
 
 A CRC32 checksum for python - implemented in Nim lang for lower-level language.
 
