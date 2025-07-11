@@ -1,5 +1,5 @@
 [project]
-name = "micro-crc"
+name = "microcrc"
 version = "1.0.1"
 description = "Blazing fast CRC32 via Nim, precompiled for Python."
 readme = "readme.md"
@@ -7,7 +7,7 @@ requires-python = ">=3.8"
 license = "MIT"
 keywords = []
 authors = [
-    { name="Strangemother", email="micro-crc32@strangemother.com" }
+    { name="Strangemother", email="microcrc@strangemother.com" }
 ]
 
 classifiers = [
@@ -26,10 +26,10 @@ dependencies = []
 
 
 [project.urls]
-Documentation = "https://github.com/Strangemother/python-micro-crc#readme"
-Homepage = "https://github.com/Strangemother/python-micro-crc"
-Repository = "https://github.com/Strangemother/python-micro-crc"
-Issues = "https://github.com/Strangemother/python-micro-crc32/issues"
+Documentation = "https://github.com/Strangemother/python-microcrc#readme"
+Homepage = "https://github.com/Strangemother/python-microcrc"
+Repository = "https://github.com/Strangemother/python-microcrc"
+Issues = "https://github.com/Strangemother/python-microcrc/issues"
 
 
 [build-system]
