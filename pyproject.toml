@@ -1,5 +1,5 @@
 [project]
-name = "micro-crc32"
+name = "micro-crc"
 version = "1.0.0"
 description = "Blazing fast CRC32 via Nim, precompiled for Python."
 authors = [
