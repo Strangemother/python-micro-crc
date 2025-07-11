@@ -33,5 +33,4 @@ proc crc32(s: string): CRC32 {.exportpy, inline.} =
 
 proc `$`(c: CRC32): string = int64(c).toHex(8)
 
-# Example assertion:
 assert crc32("The quick brown fox jumps over the lazy dog") == 0x414FA339

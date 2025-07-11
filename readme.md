@@ -1,16 +1,31 @@
-# Python `crc.crc32`
+# Python `microcrc.crc32`
 
 A CRC32 checksum for python - implemented in Nim lang for lower-level language.
+
+
+# Install and Use
+
+No compilation or setup. Just a micro library for the `crc32` function
+
+```bash
+pip install microcrc
+```
 
 Usage:
 
 ```py
-from crc import crc32
+from microcrc import crc32
 
-crc32('Hello World')
-0x4a17b156
+result = crc32('Hello World')
+1243066710
+
+hex(result)
+'0x4a17b156'
 ```
 
+That's it - use it for anything.
+
+---
 
 + **Is fast fast fast**
 
@@ -18,7 +33,7 @@ crc32('Hello World')
 
 + **Table-Driven Approach:**
 
-    Precomputing a lookup table transforms an algorithm that could have been computationally expensive into one that’s highly efficient.
+    Precomputing a lookup table speeds up end-usage, so it's more efficent when running.
 
 + **Made in Nim (exported to Python)**
 
@@ -27,6 +42,13 @@ crc32('Hello World')
 + Matches online examples:
 
     Using polynomial `0xEDB88320` ensures we match JS and other online examples.
+
+
+## How it works
+
+The core function `crc32` is written in "nim-lang" and compiled into a `.pyd`, bundled into the package.
+
+The nim module `./src/crc.nim` contains a _pre-compiled_ lookup table and the python exposed proc. To gain more speed the proc uses memory address pointers, using the pre-computed lookup-table when computing the xor.
 
 
 ## Benchmark
@@ -128,8 +150,14 @@ Python:
 ```py
 # python
 from crc import crc32
-python_result = crc32('The quick brown fox jumps over the lazy dog')
-0x414FA339
+v = crc32('The quick brown fox jumps over the lazy dog')
+1095738169 # int
+
+hex(v)
+'0x414fa339'
+
+oct(v)
+'0o10123721471'
 ```
 
 JS:
