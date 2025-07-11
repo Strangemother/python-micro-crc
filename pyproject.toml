@@ -1,6 +1,6 @@
 [project]
 name = "microcrc"
-version = "1.0.1"
+version = "1.0.2"
 description = "Blazing fast CRC32 via Nim, precompiled for Python."
 readme = "readme.md"
 requires-python = ">=3.8"
